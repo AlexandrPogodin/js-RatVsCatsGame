@@ -4,7 +4,6 @@ const $app = document.querySelector('.app');
 const playground = [];
 const entityList = [];
 const playerTarget = [];
-const tutorial = document.querySelector('.tutorial');
 let playerScore = 0;
 let isGameStarted = false;
 let timerAllMove;
@@ -153,6 +152,14 @@ class Cat extends Character {
   }
 }
 
+function getCountOfEntity(Class) {
+  let count = 0;
+  entityList.forEach(obj => {
+    if (obj instanceof Class) count += 1;
+  });
+  return count;
+}
+
 function createPlayground() {
   for (let i = 0; i < 10; i += 1) {
     playground[i] = [];
@@ -160,6 +167,27 @@ function createPlayground() {
       playground[i][j] = '';
     }
   }
+}
+
+function collectTutorial() {
+  const tutorial = document.createElement('div');
+  tutorial.classList.add('tutoprial');
+  const h2 = document.createElement('h2');
+  h2.classList.add('tutorial__title');
+  h2.innerHTML = 'Tutorial';
+  const p = document.createElement('p');
+  p.classList.add('tutorial__text');
+  p.innerHTML = `- Click on a cell to create a playable rat and start the game<br>
+  - Click on the cell to indicate the target for the rat (it follows the
+  specified target)<br>
+  - Food Adds Points <br>
+  - Do not get caught by cats <br>
+  - After each turn, food and a cat are generated with a probability of
+  50% <br>
+  - The maximum number of food and cats is limited <br>`;
+  tutorial.appendChild(h2);
+  tutorial.appendChild(p);
+  return tutorial;
 }
 
 function renderPlayground() {
@@ -174,7 +202,7 @@ function renderPlayground() {
   if (!isGameEnd) {
     $title.innerHTML = `Score: ${playerScore}`;
   } else {
-    $title.innerHTML = `Game over (Your core: ${playerScore})`;
+    $title.innerHTML = `Game over (Score: ${playerScore})`;
   }
   for (let i = 0; i < 10; i += 1) {
     for (let j = 0; j < 10; j += 1) {
@@ -191,6 +219,10 @@ function renderPlayground() {
   $app.appendChild($title);
   $app.appendChild($playground);
   $app.appendChild($btnReset);
+  if (!isGameStarted && !isGameEnd) {
+    const tutorial = collectTutorial();
+    $app.appendChild(tutorial);
+  }
 }
 
 function updatePlayground() {
@@ -254,7 +286,6 @@ function generateEntity(amt, Class) {
 }
 
 function resetGame() {
-  tutorial.classList.remove('none');
   isGameStarted = false;
   isGameEnd = false;
   clearTimeout(timerAllMove);
@@ -265,7 +296,6 @@ function resetGame() {
 }
 
 function startGame(x, y) {
-  tutorial.classList.add('none');
   isGameStarted = true;
   isGameEnd = false;
   const player = new Rat([+x, +y]);
@@ -312,8 +342,8 @@ function doMoves() {
     }
   });
   if (checkPlayerExist()) {
-    generateEntity(randInt(0, 1), Food);
-    generateEntity(randInt(0, 1), Cat);
+    if (getCountOfEntity(Food) < 15) generateEntity(randInt(0, 1), Food);
+    if (getCountOfEntity(Cat) < 30) generateEntity(randInt(0, 1), Cat);
     updatePlayerScore();
     updatePlayground();
     timerAllMove = setTimeout(doMoves, 1000);
