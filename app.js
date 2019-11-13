@@ -174,7 +174,7 @@ function renderPlayground() {
   if (!isGameEnd) {
     $title.innerHTML = `Score: ${playerScore}`;
   } else {
-    $title.innerHTML = `Game over (Score: ${playerScore})`;
+    $title.innerHTML = `Game over (Your core: ${playerScore})`;
   }
   for (let i = 0; i < 10; i += 1) {
     for (let j = 0; j < 10; j += 1) {

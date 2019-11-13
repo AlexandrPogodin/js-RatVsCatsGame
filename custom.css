@@ -80,8 +80,9 @@ body {
 }
 
 .tutorial {
-  width: 500px;
+  max-width: 500px;
   margin: 30px auto;
+  padding: 10px;
 }
 
 .tutorial__title {
