@@ -2,7 +2,7 @@
 
 Simple JS game for NC-Frontend
 
-[![RatVsCats](https://i.imgur.com/YHgUU1V.png "RatVsCats")](https://codepen.io/alexandrpogodin/full/abbaxKb "RatVsCats")
+[![RatVsCats](https://i.imgur.com/kuayUzy.png "RatVsCats")](https://codepen.io/alexandrpogodin/full/abbaxKb "RatVsCats")
 
 ### Demo
 

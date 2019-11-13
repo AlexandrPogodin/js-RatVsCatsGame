@@ -196,7 +196,7 @@ function renderPlayground() {
   const $title = document.createElement('h1');
   $playground.classList.add('playground');
   $btnReset.classList.add('btn-reset');
-  $btnReset.innerHTML = 'Начать заново';
+  $btnReset.innerHTML = 'New game';
   $title.classList.add('title');
   $app.innerHTML = '';
   if (!isGameEnd) {
